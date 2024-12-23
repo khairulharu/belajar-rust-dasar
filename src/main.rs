@@ -180,11 +180,43 @@ fn ownership_in_function() {
     println!("ini tidak pindah ownershipnya: {}", factorial_number);
 
     //jika data tersebut di simpan di stack maka data tersebut akan di copy
-    //kalau datanya di heap maka ownership nya pindah cara ngakalinnya adalah menggunakan refences
+    //kalau datanya di heap maka ownership nya pindah cara ngakalinnya adalah menggunakan refence
 
     let my_name = String::from("Khairul Aswad");
 
     print_my_name_five_times(my_name);
 
     // println!("This value is move: {}", my_name);
+}
+
+fn full_name(first_name: String, last_name: String) -> String {
+    format!("{} {}", first_name, last_name)
+}
+
+#[test]
+fn test_full_name() {
+    let first_name = String::from("Khairul");
+    let last_name = String::from("Aswad");
+
+    let full_name = full_name(first_name, last_name);
+
+    println!("{}", full_name);
+}
+
+fn full_name_tuple(first_name: String, last_name: String) -> (String, String, String) {
+    let full_name = format!("{} {}", first_name, last_name);
+
+    (first_name, last_name, full_name)
+}
+
+#[test]
+fn test_full_name_tuple() {
+    let first_name = String::from("Khairul");
+    let last_name = String::from("Aswad");
+
+    let (first_name1, last_name1, full_name1) = full_name_tuple(first_name, last_name);
+
+    println!("{}", first_name1);
+    println!("{}", last_name1);
+    println!("{}", full_name1);
 }
