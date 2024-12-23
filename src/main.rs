@@ -222,7 +222,7 @@ fn test_full_name_tuple() {
 }
 
 fn full_name_references(first_name: &String, last_name: &String) -> String {
-    format!("{} {}", first_name, last_name)
+    return format!("{} {}", first_name, last_name);
 }
 
 #[test]
@@ -265,4 +265,20 @@ fn test_change_value() {
     change_value(borrowed_value);
 
     println!("borrwed value :{}", value)
-} 
+}
+
+fn get_full_name(first_name: &String, last_name: &String) -> String {
+    let full_name = format!("{} {}", first_name, last_name);
+
+    return full_name;
+}
+
+#[test]
+fn test_get_full_name() {
+    let first_name = String::from("Khairul");
+    let last_name = String::from("Aswad");
+
+    let full_name = get_full_name(&first_name, &last_name);
+
+    println!("{}", full_name);
+}
