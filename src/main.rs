@@ -220,3 +220,19 @@ fn test_full_name_tuple() {
     println!("{}", last_name1);
     println!("{}", full_name1);
 }
+
+fn full_name_references(first_name: &String, last_name: &String) -> String {
+    format!("{} {}", first_name, last_name)
+}
+
+#[test]
+fn test_full_name_references() {
+    let first_name = String::from("Khairul");
+    let last_name = String::from("Aswad");
+
+    let full_name = full_name_references(&first_name, &last_name);
+
+    println!("{}", first_name);
+    println!("{}", last_name);
+    println!("{}", full_name);
+}
