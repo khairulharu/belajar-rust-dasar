@@ -236,3 +236,33 @@ fn test_full_name_references() {
     println!("{}", last_name);
     println!("{}", full_name);
 }
+
+fn change_value(value: &mut String) {
+    value.push_str(" change");
+}
+
+#[test]
+fn test_change_value() {
+    let mut value = String::from("Khairul Aswad");
+
+    // change_value(&mut value);
+
+    // println!("{}", value);
+    // change_value(&mut value);
+    // println!("{}", value);
+    // change_value(&mut value);
+
+    // println!("{}", value);
+
+
+    let borrowed_value = &mut value;
+
+    borrowed_value.push_str("string");
+
+    change_value(borrowed_value);
+    change_value(borrowed_value);
+    change_value(borrowed_value);
+    change_value(borrowed_value);
+
+    println!("borrwed value :{}", value)
+} 
