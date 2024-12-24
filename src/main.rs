@@ -1,3 +1,4 @@
+
 fn main() {
     println!("Hello, world!");
 }
@@ -281,4 +282,48 @@ fn test_get_full_name() {
     let full_name = get_full_name(&first_name, &last_name);
 
     println!("{}", full_name);
+}
+
+#[test]
+fn slice_reference() {
+
+    //fixed size array itu tidak di pindahkan ownershipnya dikarenakan di tipe data yang pada saat compile kita tau ukurannya.
+    let array: [i32; 10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    //slice itu adalah references jadi tidak pindah juga ownershipnya hanya references ke string aslinya.
+    let slice1: &[i32] = &array[..];
+    println!("{:?}", slice1);
+
+    let slice5 = slice1;
+
+    println!("{:?}", slice5);
+
+    let slice2: &[i32] = &array[0..5];
+    println!("{:?}", slice2);
+
+    let slice3: &[i32] = &array[0..=5];
+    println!("{:?}", slice3);
+
+    let slice4: &[i32] = &array[5..];
+    println!("{:?}", slice4);
+}
+
+fn get_ownerships(name: String) {
+    println!("{}", name);
+}
+
+#[test]
+fn string_slice() {
+    let name: String = String::from("Halo Dek Abang Lagi Nyantai");
+
+    // get_ownerships(name);
+
+    // string slice adalah references jadi jika yang di reference hilang atau pindah ownership maka string slice nya akan tidak berguna
+    let get_halo = &name[0..4];
+    println!("{}", get_halo);
+
+    let another_string = get_halo.trim();
+
+    println!("{}", get_halo);
+    println!("{}", another_string);
 }
