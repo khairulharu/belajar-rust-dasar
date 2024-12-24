@@ -308,9 +308,9 @@ fn slice_reference() {
     println!("{:?}", slice4);
 }
 
-fn get_ownerships(name: String) {
-    println!("{}", name);
-}
+// fn get_ownerships(name: String) {
+//     println!("{}", name);
+// }
 
 #[test]
 fn string_slice() {
@@ -326,4 +326,48 @@ fn string_slice() {
 
     println!("{}", get_halo);
     println!("{}", another_string);
+}
+
+struct Person {
+    first_name: String,
+    last_name: String,
+    age: u8,
+}
+
+fn print_person(person: &Person) {
+    println!("{}", person.first_name);
+    println!("{}", person.last_name);
+    println!("{}", person.age);
+}
+
+#[test]
+fn struct_in_rust() {
+
+    let first_name = String::from("Khairul");
+    let last_name = String::from("Aswad");
+    
+    //init shorthand
+    let khairul: Person = Person {
+        first_name,
+        last_name,
+        age: 20
+    };
+
+    print_person(&khairul);
+
+    //if we use Struct Update Syntax value will move if data on heap;
+    let mut khairul2 = Person{..khairul};
+
+    //if we dosnt want move the value, use clone traits, to move variable on heap so the ownership dont move; 
+    let khairul3: Person = Person {
+        last_name: khairul2.last_name.clone(),
+        first_name: khairul2.first_name.clone(),
+        ..khairul2
+    };
+
+    print_person(&khairul3);
+
+    khairul2.first_name = String::from("Alok");
+
+    print_person(&khairul2);
 }
