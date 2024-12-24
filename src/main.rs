@@ -271,7 +271,7 @@ fn test_change_value() {
 fn get_full_name(first_name: &String, last_name: &String) -> String {
     let full_name = format!("{} {}", first_name, last_name);
 
-    return full_name;
+    return full_name; 
 }
 
 #[test]
