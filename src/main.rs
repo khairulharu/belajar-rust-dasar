@@ -2,6 +2,7 @@ mod alok;
 mod layla;
 mod model;
 mod zilong;
+mod aurora;
 
 use model::{User, Weapon};
 //or 
