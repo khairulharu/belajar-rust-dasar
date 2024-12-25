@@ -17,13 +17,36 @@ mod model {
     }
 }
 
+mod zilong {
+    pub fn flicker() {
+        println!("no flicker zilong");
+    }
+}
+
+mod layla {
+    pub fn flicker() {
+        println!("nf 430 layla");
+    }
+}
+
+use zilong::flicker;
+use layla::flicker as flicker_layla;
+
+#[test]
+fn test_use_modul() {
+    flicker();
+
+    flicker_layla();
+}
+
 fn main() {
     println!("Hello, world!");
 }
 
+use model::User;
 #[test]
 fn test_public_model() {
-    let user = model::User {
+    let user: User = User {
         first_name: String::from("alok"),
         last_name: String::from("tuti"),
         username: String::from("alokskik"),
