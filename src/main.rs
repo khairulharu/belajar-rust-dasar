@@ -680,6 +680,8 @@ impl Customer {
     }
 }
 
+type Pelanggan = Customer;
+
 #[test]
 fn test_identity_number_string() {
     let customer = Customer {
@@ -688,5 +690,12 @@ fn test_identity_number_string() {
         age: 20,
     };
 
+    let pelanggan: Pelanggan = Pelanggan {
+        id: String::from("97913134"),
+        name: String::from("pelanggan"),
+        age: 93
+    };
+
+    pelanggan.print_value();
     customer.print_value();    
 }
