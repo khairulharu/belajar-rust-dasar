@@ -1,5 +1,37 @@
+mod model {
+    pub struct User {
+        pub first_name: String,
+        pub last_name: String,
+        pub username: String,
+        pub email: String,
+        pub age: u8,
+    }
+
+    impl User {
+        pub fn show_my_credential(&self) {
+            println!(
+                "first_name: {}, last_name: {}, username: {}, email: {}, age: {}",
+                self.first_name, self.last_name, self.username, self.email, self.age
+            )
+        }
+    }
+}
+
 fn main() {
     println!("Hello, world!");
+}
+
+#[test]
+fn test_public_model() {
+    let user = model::User {
+        first_name: String::from("alok"),
+        last_name: String::from("tuti"),
+        username: String::from("alokskik"),
+        email: String::from("alok@gmail.com"),
+        age: 80,
+    };
+
+    user.show_my_credential();
 }
 
 #[test]
@@ -572,7 +604,7 @@ fn test_range_pattern_matching() {
 
     match value {
         90..=100 => {
-            println!("Great"); 
+            println!("Great");
         }
         80..=89 => {
             println!("imposiibela")
@@ -588,7 +620,7 @@ fn test_range_pattern_matching() {
 
 #[test]
 fn test_destructuring_tuple_using_match() {
-    let geo_point = GeoPointTuple(121.13131, -113.1313 );
+    let geo_point = GeoPointTuple(121.13131, -113.1313);
 
     match geo_point {
         GeoPointTuple(0.0, 0.0) => {
@@ -600,7 +632,7 @@ fn test_destructuring_tuple_using_match() {
         GeoPointTuple(0.0, lati) => {
             println!("longitude mus filled longitude: , latitude: {}", lati);
         }
-        GeoPointTuple(longitude, latitude ) => {
+        GeoPointTuple(longitude, latitude) => {
             println!("longitude: {}, latitude: {}", longitude, latitude);
         }
     }
@@ -608,7 +640,11 @@ fn test_destructuring_tuple_using_match() {
 
 #[test]
 fn test_struct_destructuring_using_match() {
-    let layla: Hero = Hero::new(String::from("layla"), String::from("bullet drop with phisycal"), 212);
+    let layla: Hero = Hero::new(
+        String::from("layla"),
+        String::from("bullet drop with phisycal"),
+        212,
+    );
 
     match layla {
         Hero { name, skill, .. } => {
@@ -618,7 +654,7 @@ fn test_struct_destructuring_using_match() {
 }
 #[test]
 fn test_tuple_enum_ignoring() {
-    let geo_point = GeoPointTuple(121.13131, -113.1313 );
+    let geo_point = GeoPointTuple(121.13131, -113.1313);
 
     match geo_point {
         GeoPointTuple(_, lati) => {
@@ -633,7 +669,7 @@ fn test_range_ignore_match() {
 
     match value {
         90..=100 => {
-            println!("Great"); 
+            println!("Great");
         }
         80..=89 => {
             println!("imposiibela")
@@ -653,16 +689,11 @@ fn test_match_expression() {
 
     let result = match value {
         0 => "nol",
-        1 => {
-            "satu"
-        }
-        _ => {
-            "invalid"
-        }
+        1 => "satu",
+        _ => "invalid",
     };
 
     println!("{}", result);
-
 }
 
 type Age = u8;
@@ -671,7 +702,7 @@ type IdentityNumber = String;
 struct Customer {
     id: IdentityNumber,
     name: String,
-    age: Age
+    age: Age,
 }
 
 impl Customer {
@@ -693,9 +724,9 @@ fn test_identity_number_string() {
     let pelanggan: Pelanggan = Pelanggan {
         id: String::from("97913134"),
         name: String::from("pelanggan"),
-        age: 93
+        age: 93,
     };
 
     pelanggan.print_value();
-    customer.print_value();    
+    customer.print_value();
 }
