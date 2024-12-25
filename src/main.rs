@@ -1,4 +1,3 @@
-
 fn main() {
     println!("Hello, world!");
 }
@@ -72,9 +71,9 @@ fn range() {
     for i in 0..5 {
         println!("Index ke {} value {}", i, array[i])
     }
-    
+
     //range inclusive
-    let range_inclusive= 0..=6;
+    let range_inclusive = 0..=6;
 
     println!("start {}", range_inclusive.start());
 
@@ -255,7 +254,6 @@ fn test_change_value() {
 
     // println!("{}", value);
 
-
     let borrowed_value = &mut value;
 
     borrowed_value.push_str("string");
@@ -271,7 +269,7 @@ fn test_change_value() {
 fn get_full_name(first_name: &String, last_name: &String) -> String {
     let full_name = format!("{} {}", first_name, last_name);
 
-    return full_name; 
+    return full_name;
 }
 
 #[test]
@@ -286,7 +284,6 @@ fn test_get_full_name() {
 
 #[test]
 fn slice_reference() {
-
     //fixed size array itu tidak di pindahkan ownershipnya dikarenakan di tipe data yang pada saat compile kita tau ukurannya.
     let array: [i32; 10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -342,23 +339,22 @@ fn print_person(person: &Person) {
 
 #[test]
 fn struct_in_rust() {
-
     let first_name = String::from("Khairul");
     let last_name = String::from("Aswad");
-    
+
     //init shorthand
     let khairul: Person = Person {
         first_name,
         last_name,
-        age: 20
+        age: 20,
     };
 
     print_person(&khairul);
 
     //if we use Struct Update Syntax value will move if data on heap;
-    let mut khairul2 = Person{..khairul};
+    let mut khairul2 = Person { ..khairul };
 
-    //if we dosnt want move the value, use clone traits, to move variable on heap so the ownership dont move; 
+    //if we dosnt want move the value, use clone traits, to move variable on heap so the ownership dont move;
     let khairul3: Person = Person {
         last_name: khairul2.last_name.clone(),
         first_name: khairul2.first_name.clone(),
@@ -377,7 +373,7 @@ struct GeoPointTuple(f64, f64);
 
 struct GeoPointStruct {
     longitude: f64,
-    latitude: f64
+    latitude: f64,
 }
 
 #[test]
@@ -386,7 +382,7 @@ fn test_tuple_struct_and_normal_struct() {
 
     let geo_point: GeoPointStruct = GeoPointStruct {
         longitude: -3.716471834,
-        latitude: 197.31442313
+        latitude: 197.31442313,
     };
 
     println!("{}", geo_point1.0);
@@ -401,17 +397,16 @@ struct Nothing;
 fn test_struct_nothing() {
     let _nothing: Nothing = Nothing;
 
-    let _nothing1: Nothing = Nothing{};
+    let _nothing1: Nothing = Nothing {};
 }
 
 struct Hero {
     name: String,
     skill: String,
-    hp: u32
+    hp: u32,
 }
 
 impl Hero {
-
     //associated function
     fn new(name: String, skill: String, hp: u32) -> Hero {
         Hero { name, skill, hp }
@@ -439,7 +434,7 @@ fn test_method_in_struct() {
     let alok_no_hand: Hero = Hero {
         name: String::from("nur alok wijaya"),
         skill: String::from("menambahkan hp dan kecepatan lari"),
-        hp: 200
+        hp: 200,
     };
     // alok_no_hand.show_name_and_move();
 
@@ -450,7 +445,11 @@ fn test_method_in_struct() {
 
 #[test]
 fn test_associated_function_to_create_new_hero() {
-    let layla: Hero = Hero::new(String::from("Layla"), String::from("tembak tembak physical damage"), 200);
+    let layla: Hero = Hero::new(
+        String::from("Layla"),
+        String::from("tembak tembak physical damage"),
+        200,
+    );
 
     layla.show_hp();
     layla.show_name();
@@ -460,7 +459,7 @@ fn test_associated_function_to_create_new_hero() {
 enum Level {
     High,
     Medium,
-    Low
+    Low,
 }
 
 #[test]
@@ -478,21 +477,216 @@ enum Payment {
 
 impl Payment {
     fn pay(&self, amount: u32) {
-        println!("Paying Amount {}", amount);
+        match self {
+            Payment::CreditCard(number) => {
+                println!(
+                    "Pembayaran dilakukan menggunakan Credit Card dengan nomor {} dengan jumlah {}",
+                    number, amount
+                );
+            }
+            Payment::BankTransfer(bank, number) => {
+                println!("Pembayaran dilakukan menggunakan bank Transfer dengan tipe bank {} dan nomor rekening {} dengan nominal: {}", bank, number, amount);
+            }
+            Payment::Ewallet(ewallet, number) => {
+                println!("Pembayaran di lakukan dengan menggunakan Ewallet dengan nama {} nomor {} dengan nominal {}", ewallet, number, amount);
+            }
+        }
     }
 }
 
 #[test]
 fn test_payment() {
-    let _payment1: Payment = Payment::BankTransfer(String::from("halo dek"),String::from("12413131"));
+    let _payment1: Payment = Payment::BankTransfer(String::from("BCA"), String::from("12413131"));
 
     _payment1.pay(10810313);
 
-    let _payment2: Payment = Payment::CreditCard(String::from("visa"));
+    let _payment2: Payment = Payment::CreditCard(String::from("1391839174"));
 
-    _payment2.pay(0891219213);
+    _payment2.pay(891219213);
 
-    let payment3: Payment = Payment::Ewallet(String::from("halo dek"), String::from("13117484819"));
+    let payment3: Payment = Payment::Ewallet(String::from("GOPAY"), String::from("13117484819"));
 
-    payment3.pay(1923241312);    
+    payment3.pay(1923241312);
+}
+
+enum Skill {
+    PhysicalDamage,
+    MagicDamage,
+    TrueDamage,
+}
+
+fn what_typical_damage_do_i_have(hero: Skill) {
+    match hero {
+        Skill::PhysicalDamage => {
+            println!("hero ini physical damage");
+        }
+        Skill::MagicDamage => {
+            println!("hero ini magic damage");
+        }
+        Skill::TrueDamage => {
+            println!("hero ini memakai true  damage");
+        }
+    }
+}
+
+#[test]
+fn pattern_matching() {
+    let layla: Skill = Skill::PhysicalDamage;
+    let eudora: Skill = Skill::MagicDamage;
+    let lesley: Skill = Skill::TrueDamage;
+
+    what_typical_damage_do_i_have(layla);
+    what_typical_damage_do_i_have(eudora);
+    what_typical_damage_do_i_have(lesley);
+}
+
+#[test]
+fn test_match_value() {
+    let name = "tolod";
+
+    match name {
+        "tulu" => {
+            println!("halo tulu: kamu {} kan?", name);
+        }
+        "tolo" => {
+            println!("wahh tolo selemat datang");
+        }
+        other => {
+            println!("yahhh kamu lagi {}", other);
+        }
+    }
+
+    match name {
+        "tulu" | "tolo" => {
+            println!("halo tulu: kamu {} kan?", name);
+        }
+        other => {
+            println!("yahhh kamu lagi {}", other);
+        }
+    }
+}
+
+#[test]
+fn test_range_pattern_matching() {
+    let value = 100;
+
+    match value {
+        90..=100 => {
+            println!("Great"); 
+        }
+        80..=89 => {
+            println!("imposiibela")
+        }
+        75..=79 => {
+            println!("ccuihh")
+        }
+        other => {
+            println!("Blok belajar lagi nilai kok {}", other);
+        }
+    }
+}
+
+#[test]
+fn test_destructuring_tuple_using_match() {
+    let geo_point = GeoPointTuple(121.13131, -113.1313 );
+
+    match geo_point {
+        GeoPointTuple(0.0, 0.0) => {
+            println!("please input actual longitude and latitude");
+        }
+        GeoPointTuple(long, 0.0) => {
+            println!("latitude must filled out longitude:{}, latitude: ", long);
+        }
+        GeoPointTuple(0.0, lati) => {
+            println!("longitude mus filled longitude: , latitude: {}", lati);
+        }
+        GeoPointTuple(longitude, latitude ) => {
+            println!("longitude: {}, latitude: {}", longitude, latitude);
+        }
+    }
+}
+
+#[test]
+fn test_struct_destructuring_using_match() {
+    let layla: Hero = Hero::new(String::from("layla"), String::from("bullet drop with phisycal"), 212);
+
+    match layla {
+        Hero { name, skill, .. } => {
+            println!("name: {}, skill: {}", name, skill);
+        }
+    }
+}
+#[test]
+fn test_tuple_enum_ignoring() {
+    let geo_point = GeoPointTuple(121.13131, -113.1313 );
+
+    match geo_point {
+        GeoPointTuple(_, lati) => {
+            println!("latitude: {}", lati);
+        }
+    }
+}
+
+#[test]
+fn test_range_ignore_match() {
+    let value = 0;
+
+    match value {
+        90..=100 => {
+            println!("Great"); 
+        }
+        80..=89 => {
+            println!("imposiibela")
+        }
+        75..=79 => {
+            println!("ccuihh")
+        }
+        _ => {
+            println!("Blok belajar lagi nilai kok");
+        }
+    }
+}
+
+#[test]
+fn test_match_expression() {
+    let value: i32 = 10;
+
+    let result = match value {
+        0 => "nol",
+        1 => {
+            "satu"
+        }
+        _ => {
+            "invalid"
+        }
+    };
+
+    println!("{}", result);
+
+}
+
+type Age = u8;
+type IdentityNumber = String;
+
+struct Customer {
+    id: IdentityNumber,
+    name: String,
+    age: Age
+}
+
+impl Customer {
+    fn print_value(&self) {
+        println!("id: {}, name: {}, age: {}", self.id, self.name, self.age)
+    }
+}
+
+#[test]
+fn test_identity_number_string() {
+    let customer = Customer {
+        id: String::from("013131331312"),
+        name: String::from("hilda"),
+        age: 20,
+    };
+
+    customer.print_value();    
 }
