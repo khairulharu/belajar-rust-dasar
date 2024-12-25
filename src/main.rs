@@ -371,3 +371,128 @@ fn struct_in_rust() {
 
     print_person(&khairul2);
 }
+
+//implement in tuple struct
+struct GeoPointTuple(f64, f64);
+
+struct GeoPointStruct {
+    longitude: f64,
+    latitude: f64
+}
+
+#[test]
+fn test_tuple_struct_and_normal_struct() {
+    let geo_point1: GeoPointTuple = GeoPointTuple(-3.716471834, 197.31442313);
+
+    let geo_point: GeoPointStruct = GeoPointStruct {
+        longitude: -3.716471834,
+        latitude: 197.31442313
+    };
+
+    println!("{}", geo_point1.0);
+    println!("{}", geo_point1.1);
+    println!("{}", geo_point.latitude);
+    println!("{}", geo_point.longitude);
+}
+
+struct Nothing;
+
+#[test]
+fn test_struct_nothing() {
+    let _nothing: Nothing = Nothing;
+
+    let _nothing1: Nothing = Nothing{};
+}
+
+struct Hero {
+    name: String,
+    skill: String,
+    hp: u32
+}
+
+impl Hero {
+
+    //associated function
+    fn new(name: String, skill: String, hp: u32) -> Hero {
+        Hero { name, skill, hp }
+    }
+
+    fn show_name(&self) {
+        println!("name: {}", self.name);
+    }
+
+    fn show_skill(&self) {
+        println!("skill: {}", self.skill);
+    }
+
+    fn show_hp(&self) {
+        println!("skill: {}", self.hp);
+    }
+
+    // fn show_name_and_move(self) {
+    //     println!("name and move: {}", self.name);
+    // }
+}
+
+#[test]
+fn test_method_in_struct() {
+    let alok_no_hand: Hero = Hero {
+        name: String::from("nur alok wijaya"),
+        skill: String::from("menambahkan hp dan kecepatan lari"),
+        hp: 200
+    };
+    // alok_no_hand.show_name_and_move();
+
+    alok_no_hand.show_name();
+    alok_no_hand.show_hp();
+    alok_no_hand.show_skill();
+}
+
+#[test]
+fn test_associated_function_to_create_new_hero() {
+    let layla: Hero = Hero::new(String::from("Layla"), String::from("tembak tembak physical damage"), 200);
+
+    layla.show_hp();
+    layla.show_name();
+    layla.show_skill();
+}
+
+enum Level {
+    High,
+    Medium,
+    Low
+}
+
+#[test]
+fn test_enum() {
+    let _level0: Level = Level::High;
+    let _level1: Level = Level::Medium;
+    let _level3: Level = Level::Low;
+}
+
+enum Payment {
+    CreditCard(String),
+    BankTransfer(String, String),
+    Ewallet(String, String),
+}
+
+impl Payment {
+    fn pay(&self, amount: u32) {
+        println!("Paying Amount {}", amount);
+    }
+}
+
+#[test]
+fn test_payment() {
+    let _payment1: Payment = Payment::BankTransfer(String::from("halo dek"),String::from("12413131"));
+
+    _payment1.pay(10810313);
+
+    let _payment2: Payment = Payment::CreditCard(String::from("visa"));
+
+    _payment2.pay(0891219213);
+
+    let payment3: Payment = Payment::Ewallet(String::from("halo dek"), String::from("13117484819"));
+
+    payment3.pay(1923241312);    
+}
