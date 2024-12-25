@@ -1,49 +1,23 @@
-mod model {
-    pub struct User {
-        pub first_name: String,
-        pub last_name: String,
-        pub username: String,
-        pub email: String,
-        pub age: u8,
-    }
+mod alok;
+mod layla;
+mod model;
 
-    impl User {
-        pub fn show_my_credential(&self) {
-            println!(
-                "first_name: {}, last_name: {}, username: {}, email: {}, age: {}",
-                self.first_name, self.last_name, self.username, self.email, self.age
-            )
-        }
-    }
-}
-
-mod zilong {
-    pub fn flicker() {
-        println!("no flicker zilong");
-    }
-}
-
-mod layla {
-    pub fn flicker() {
-        println!("nf 430 layla");
-    }
-}
-
-use zilong::flicker;
-use layla::flicker as flicker_layla;
+use model::{User, Weapon};
+//or 
+// use model::*;
+use alok::tembak_musuh;
+use layla::tembak_musuh as tembak_musuh_layla;
 
 #[test]
 fn test_use_modul() {
-    flicker();
-
-    flicker_layla();
+    tembak_musuh();
+    tembak_musuh_layla();
 }
 
 fn main() {
     println!("Hello, world!");
 }
 
-use model::User;
 #[test]
 fn test_public_model() {
     let user: User = User {
@@ -53,6 +27,17 @@ fn test_public_model() {
         email: String::from("alok@gmail.com"),
         age: 80,
     };
+    
+    let m416: Weapon = Weapon {
+        name: "m416".to_string(),
+        magazine: 16,
+        single_mode: true
+    };
+
+    println!("weapon name: {}", m416.name);
+    println!("weapon single mode: {}", m416.single_mode);
+
+    user.show_my_credential();
 
     user.show_my_credential();
 }
