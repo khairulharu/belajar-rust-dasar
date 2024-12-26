@@ -4,6 +4,7 @@ mod model;
 mod zilong;
 mod aurora;
 
+use aurora::say_hello_this_is_aurora;
 use model::{User, Weapon};
 //or 
 // use model::*;
@@ -12,16 +13,16 @@ use layla::tembak_musuh as tembak_musuh_layla;
 use zilong::zilong_speaking;
 
 
+fn main() {
+    println!("Hello, world!");
+}
+
 #[test]
 fn test_use_modul() {
     tembak_musuh();
     tembak_musuh_layla();
     zilong_speaking();
     zilong::hero::skill::tembak_musuh();
-}
-
-fn main() {
-    println!("Hello, world!");
 }
 
 #[test]
@@ -743,4 +744,87 @@ fn test_identity_number_string() {
 
     pelanggan.print_value();
     customer.print_value();
+}
+
+trait CanSayHello {
+    fn hello(&self) -> String {
+        String::from("this is the implementation for u")
+    }
+
+    fn say_hello(&self) -> String;
+    fn say_hello_to(&self, name: &str) -> String;
+}
+
+trait CanSayGoodBye {
+    fn say_good_bye(&self) -> String;
+    fn say_good_bye_to(&self, name: &str) -> String;
+}
+
+struct Human {
+    name: String
+}
+
+impl CanSayHello for Human {
+    fn say_hello(&self) -> String {
+        format!("hello my name is {}", self.name)
+    }
+
+    fn say_hello_to(&self, name: &str) -> String {
+        format!("hello {} my name is {}", name, self.name)
+    }
+}
+
+impl CanSayGoodBye for Human {
+    fn say_good_bye(&self) -> String {
+        format!("{}: good bay bro have a nice day", self.name)
+    }
+
+    fn say_good_bye_to(&self, name: &str) -> String {
+        format!("{}: have a nice day bro, {}", self.name, name)
+    }
+}
+
+fn say_hello_trait(person: &impl CanSayHello) {
+    println!("{}", person.say_hello_to("layla flicker"));
+}
+
+fn say_hello_and_good_bay(value: &(impl CanSayHello + CanSayGoodBye)) {
+    println!("{}", value.say_hello());
+    println!("{}", value.say_good_bye());
+}
+
+#[test]
+fn test_trait_implementation() {
+    let alok_jumpshot: Human = Human {
+        name: "alok jumpshot".to_string()
+    };
+
+    let no_hand: Human = Human { 
+        name: String::from("no hand") 
+    };
+
+    say_hello_trait(&no_hand);
+    say_hello_trait(&alok_jumpshot);
+    
+    println!("\n");
+    
+    println!("{}", no_hand.hello());
+    println!("{}", no_hand.say_hello());
+    println!("{}", no_hand.say_hello_to("agus"));
+
+    println!("-------------");
+
+    println!("{}", alok_jumpshot.hello());
+    println!("{}", alok_jumpshot.say_hello());
+    println!("{}", alok_jumpshot.say_hello_to("khairul aswad"));
+
+    println!("\n");
+
+    println!("{}", no_hand.say_good_bye());
+    println!("{}", no_hand.say_good_bye_to("brody"));
+
+    println!("\n");
+
+    say_hello_and_good_bay(&alok_jumpshot);
+    say_hello_and_good_bay(&no_hand);
 }
