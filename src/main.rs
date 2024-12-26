@@ -895,3 +895,38 @@ fn test_return_implementation_trait() {
     println!("hp: {}", aurora_imple.show_hp_bar());
     println!("skill: {}", aurora_imple.show_skill());
 }
+
+//super trait
+trait CanSay: CanSayHello + CanSayGoodBye {
+    fn say_hello_bruda(&self) -> String;
+}
+
+struct SimpleMan {
+    name: String,
+}
+
+impl CanSayHello for SimpleMan {
+    fn say_hello(&self) -> String {
+        todo!()
+    }
+
+    fn say_hello_to(&self, name: &str) -> String {
+        todo!()
+    }
+}
+
+impl CanSayGoodBye for SimpleMan {
+    fn say_good_bye(&self) -> String {
+        todo!()
+    }
+
+    fn say_good_bye_to(&self, name: &str) -> String {
+        todo!()
+    }
+}
+
+impl CanSay for SimpleMan {
+    fn say_hello_bruda(&self) -> String {
+        format!("bruda {} this is your friedn speaking", self.name)
+    }
+}
