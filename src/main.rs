@@ -11,11 +11,13 @@ use alok::tembak_musuh;
 use layla::tembak_musuh as tembak_musuh_layla;
 use zilong::zilong_speaking;
 
+
 #[test]
 fn test_use_modul() {
     tembak_musuh();
     tembak_musuh_layla();
     zilong_speaking();
+    zilong::hero::skill::tembak_musuh();
 }
 
 fn main() {

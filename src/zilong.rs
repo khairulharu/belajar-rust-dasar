@@ -6,3 +6,14 @@ pub fn zilong_speaking() {
      tembak_musuh();
      println!("this is zilong speaking, nice to meet you guys");
 }
+
+pub mod hero {
+     pub mod skill {
+          pub fn tembak_musuh() {
+               println!("this");
+               crate::zilong::zilong_speaking();
+               println!("this");
+               super::super::zilong_speaking();
+          }
+     }
+}
