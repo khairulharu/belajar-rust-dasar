@@ -1,17 +1,16 @@
 mod alok;
+mod aurora;
 mod layla;
 mod model;
 mod zilong;
-mod aurora;
 
 use aurora::say_hello_this_is_aurora;
 use model::{User, Weapon};
-//or 
+//or
 // use model::*;
 use alok::tembak_musuh;
 use layla::tembak_musuh as tembak_musuh_layla;
 use zilong::zilong_speaking;
-
 
 fn main() {
     println!("Hello, world!");
@@ -34,11 +33,11 @@ fn test_public_model() {
         email: String::from("alok@gmail.com"),
         age: 80,
     };
-    
+
     let m416: Weapon = Weapon {
         name: "m416".to_string(),
         magazine: 16,
-        single_mode: true
+        single_mode: true,
     };
 
     println!("weapon name: {}", m416.name);
@@ -761,7 +760,7 @@ trait CanSayGoodBye {
 }
 
 struct Human {
-    name: String
+    name: String,
 }
 
 impl CanSayHello for Human {
@@ -796,18 +795,18 @@ fn say_hello_and_good_bay(value: &(impl CanSayHello + CanSayGoodBye)) {
 #[test]
 fn test_trait_implementation() {
     let alok_jumpshot: Human = Human {
-        name: "alok jumpshot".to_string()
+        name: "alok jumpshot".to_string(),
     };
 
-    let no_hand: Human = Human { 
-        name: String::from("no hand") 
+    let no_hand: Human = Human {
+        name: String::from("no hand"),
     };
 
     say_hello_trait(&no_hand);
     say_hello_trait(&alok_jumpshot);
-    
+
     println!("\n");
-    
+
     println!("{}", no_hand.hello());
     println!("{}", no_hand.say_hello());
     println!("{}", no_hand.say_hello_to("agus"));
@@ -827,4 +826,86 @@ fn test_trait_implementation() {
 
     say_hello_and_good_bay(&alok_jumpshot);
     say_hello_and_good_bay(&no_hand);
+}
+
+trait SkillAndStatus {
+    fn show_skill(&self) -> String;
+    fn show_hp_bar(&self) -> u8;
+    fn show_all_status(&self);
+}
+
+struct Zilong {
+    first_name: String,
+    last_name: String,
+}
+
+impl SkillAndStatus for Zilong {
+    fn show_skill(&self) -> String {
+        format!("show skill: {}", self.first_name)
+    }
+
+    fn show_hp_bar(&self) -> u8 {
+        200
+    }
+
+    fn show_all_status(&self) {
+        println!(
+            "name: {}, skill: {}, hp: {}",
+            self.first_name, self.last_name, 200
+        );
+    }
+}
+
+fn create_zilong_with_implementation(name: String) -> impl SkillAndStatus {
+    Zilong { first_name: name.clone(), last_name: name.clone() }
+}
+
+struct Aurora {
+    name: String,
+    skill: String,
+    hp: u8,
+}
+
+impl SkillAndStatus for Aurora {
+    fn show_skill(&self) -> String {
+        format!("show skill: {}", self.skill)
+    }
+
+    fn show_hp_bar(&self) -> u8 {
+        self.hp
+    }
+
+    fn show_all_status(&self) {
+        println!(
+            "name: {}, skill: {}, hp: {}",
+            self.name, self.skill, self.hp
+        );
+    }
+}
+
+fn create_aurora_skill_and_status(value: Aurora) -> impl SkillAndStatus {
+    Aurora {
+        name: value.name,
+        skill: value.skill,
+        hp: value.hp,
+    }
+}
+
+#[test]
+fn test_return_implementation_trait() {
+    let aurora: Aurora = Aurora {
+        name: "aur".to_string(),
+        skill: "aur".to_string(),
+        hp: 200,
+    };
+    
+    let aurora_imple = create_aurora_skill_and_status(aurora);
+
+    aurora_imple.show_all_status();
+    println!("hp: {}", aurora_imple.show_hp_bar());
+    println!("skill: {}", aurora_imple.show_skill());
+
+    let zilong_impl = create_zilong_with_implementation("sama semua".to_string());
+
+    zilong_impl.show_all_status();
 }
