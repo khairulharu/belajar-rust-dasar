@@ -4,7 +4,6 @@ mod layla;
 mod model;
 mod zilong;
 
-use aurora::say_hello_this_is_aurora;
 use model::{User, Weapon};
 //or
 // use model::*;
@@ -763,6 +762,12 @@ struct Human {
     name: String,
 }
 
+impl Human {
+    fn say_hello(&self) {
+        println!("halo my name is {}", self.name);
+    }
+}
+
 impl CanSayHello for Human {
     fn say_hello(&self) -> String {
         format!("hello my name is {}", self.name)
@@ -808,13 +813,13 @@ fn test_trait_implementation() {
     println!("\n");
 
     println!("{}", no_hand.hello());
-    println!("{}", no_hand.say_hello());
+    println!("{}", CanSayHello::say_hello(&no_hand));
     println!("{}", no_hand.say_hello_to("agus"));
 
     println!("-------------");
 
     println!("{}", alok_jumpshot.hello());
-    println!("{}", alok_jumpshot.say_hello());
+    println!("{}", CanSayHello::say_hello(&no_hand));
     println!("{}", alok_jumpshot.say_hello_to("khairul aswad"));
 
     println!("\n");
@@ -826,6 +831,10 @@ fn test_trait_implementation() {
 
     say_hello_and_good_bay(&alok_jumpshot);
     say_hello_and_good_bay(&no_hand);
+
+    //solve when method and implement trait have a same name function
+    println!("{}", CanSayHello::say_hello(&no_hand));
+    Human::say_hello(&no_hand);
 }
 
 trait SkillAndStatus {
@@ -834,36 +843,16 @@ trait SkillAndStatus {
     fn show_all_status(&self);
 }
 
-struct Zilong {
-    first_name: String,
-    last_name: String,
-}
-
-impl SkillAndStatus for Zilong {
-    fn show_skill(&self) -> String {
-        format!("show skill: {}", self.first_name)
-    }
-
-    fn show_hp_bar(&self) -> u8 {
-        200
-    }
-
-    fn show_all_status(&self) {
-        println!(
-            "name: {}, skill: {}, hp: {}",
-            self.first_name, self.last_name, 200
-        );
-    }
-}
-
-fn create_zilong_with_implementation(name: String) -> impl SkillAndStatus {
-    Zilong { first_name: name.clone(), last_name: name.clone() }
-}
-
 struct Aurora {
     name: String,
     skill: String,
     hp: u8,
+}
+
+impl Aurora {
+    fn show_skill(&self) {
+        println!("show skill method: {}", self.skill)
+    }
 }
 
 impl SkillAndStatus for Aurora {
@@ -898,14 +887,11 @@ fn test_return_implementation_trait() {
         skill: "aur".to_string(),
         hp: 200,
     };
-    
+
     let aurora_imple = create_aurora_skill_and_status(aurora);
 
+    println!("{}", aurora_imple.show_skill());    
     aurora_imple.show_all_status();
     println!("hp: {}", aurora_imple.show_hp_bar());
     println!("skill: {}", aurora_imple.show_skill());
-
-    let zilong_impl = create_zilong_with_implementation("sama semua".to_string());
-
-    zilong_impl.show_all_status();
 }
